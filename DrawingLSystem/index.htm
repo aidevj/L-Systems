@@ -22,7 +22,7 @@
   <script>    
       const Vec2 = Victor;
       const Turtle = { 
-        create( canvas, startX, startY ) {
+        create( canvas, startX, startY ) {    // pass in ctx
           const turtle = Object.create( this )
           Object.assign( turtle, {
             canvas,
@@ -87,6 +87,7 @@
       const app =  {
         canvas: null,
         ctx: null,
+        myTurtle: null,
 
         init() {
           this.canvas = document.getElementsByTagName( 'canvas' )[0];
@@ -96,17 +97,7 @@
 
           window.onresize = this.fullScreenCanvas.bind( this ); 
 
-          let myTurtle =  Turtle.create( this.canvas, 100, 100 );
-
-          this.ctx.strokeStyle = 'black';
-          this.ctx.lineWidth = 3;
-
-          this.ctx.beginPath();
-          this.ctx.moveTo(100, 100);
-          this.ctx.lineTo(100,200);
-          this.ctx.stroke();
-          this.ctx.closePath();
-
+          myTurtle =  Turtle.create( this.ctx, 300, 300 );
 
           /*
           n=5, theta=25.7°
@@ -115,12 +106,15 @@
           */
 
           // Get numGenerations and instructions as a big string
+          let lastChar = '';  //keep track of previous char
           for (let i = 0; i < numGenerations; i++) {
             let newOutput = '';
-
             for (let char of output) {
-             //if (char != 'F') continue;  // ignore if not F?
-              newOutput += rules[char];
+              //only change F if its not surrounded by brackets
+              //if (lastChar != '+' || lastChar != '-') { newOutput += rules[char]; }
+              if (lastChar != '+' || lastChar != '-') { newOutput += rules[char]; }
+             
+              lastChar = char;
             }
 
             output += newOutput;
@@ -145,7 +139,7 @@
             switch(char) {
               case 'F':
                 myTurtle.rotate(Math.PI / 2);
-                myTurtle.move(10);
+                myTurtle.move(50);
                 break;
               case '+':
                 myTurtle.rotate(-.448);
