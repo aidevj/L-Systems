@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang=en>
+  <head>
+    <meta charset=utf-8>
+    <title>L-sysyems</title>
+    <style>
+      canvas {
+        position:absolute;
+        width:100%;
+        height:100%;
+      }
+      
+      body { margin: 0; }
+      
+    </style>
+    </head>
+  
+  <body>
+    <p id="resultDiv">WIP</p>
+    
+    
+    
+     <script>
+      const rules = {
+        A: "BA",
+        B: "AB"
+      }
+
+      const axiom = 'AB';
+
+      let output = axiom;
+
+      let numGenerations = 4;
+
+      for (let i = 0; i < numGenerations; i++) {
+        let newOutput = '';
+
+        for (let char of output) {
+          newOutput += rules[char];
+        }
+
+        output = newOutput;
+
+      }
+
+      document.getElementById('resultDiv').innerHTML = output;
+      console.log(resultDiv);
+      // primitive L system
+      // F[+F] the [] represent pushing and popping the state
+
+    </script>
+  </body>
+  
+  
+</html>
