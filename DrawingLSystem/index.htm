@@ -71,14 +71,10 @@
         }
       };
 
-
+      /*------------L-SYSTEM DONE HERE------------*/
       const axiom = 'F';
       const rules = {
-        F: "F[+F]F[-F]F",
-        '[': "",
-        ']': "",
-        '+': "",
-        '-': "",
+        F: "F[+F]F[-F]F"
       };
 
       let output = axiom;
@@ -106,23 +102,18 @@
           */
 
           // Get numGenerations and instructions as a big string
-          let lastChar = '';  //keep track of previous char
+          let lastGeneration = output;
           for (let i = 0; i < numGenerations; i++) {
-            let newOutput = '';
-            for (let char of output) {
-              //only change F if its not surrounded by brackets
-              //if (lastChar != '+' || lastChar != '-') { newOutput += rules[char]; }
-              if (lastChar != '+' || lastChar != '-') { newOutput += rules[char]; }
-             
-              lastChar = char;
-            }
+            let newGeneration = '';
+            newGeneration = lastGeneration.replace("F", "F[+F]F[-F]F");
 
-            output += newOutput;
+            output += newGeneration;
+            lastGeneration = newGeneration;
           }
+          
+          
           console.log("Result: " + output);
-
-          requestAnimationFrame( this.draw );
-
+          this.draw();
         },
 
         fullScreenCanvas() { 
@@ -131,7 +122,6 @@
         },
 
         draw() {
-          requestAnimationFrame( this.draw );
 
           // Now draw the thing
 
